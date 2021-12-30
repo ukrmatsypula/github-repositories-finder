@@ -28,7 +28,10 @@ export default {
   },
   methods: {
     getRepos() {
-      console.log(this.search);
+      axios
+        .get(`https://api.github.com/users/${this.search}/repos`)
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error));
     },
   },
 };
