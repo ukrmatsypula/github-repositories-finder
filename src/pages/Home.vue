@@ -1,7 +1,16 @@
 <template>
   <div class="wrapper-content wrapper-content--fixed">
     <section>
-      <div class="container"></div>
+      <div class="container">
+        <!-- erorrs -->
+        <Search
+          :value="search"
+          placeholder="Type username..."
+          @search="search = $event"
+        />
+
+        <button class="btn btnPrimary" @click="getRepos">Search</button>
+      </div>
     </section>
   </div>
 </template>
@@ -9,14 +18,19 @@
 <script>
 import search from "@/components/Search.vue";
 import axios from "axios";
+import Search from "@/components/Search.vue";
 export default {
-  components: { search },
+  components: { Search },
   data() {
     return {
       search: "",
     };
   },
-  methods: {},
+  methods: {
+    getRepos() {
+      console.log(this.search);
+    },
+  },
 };
 </script>
 
