@@ -10,13 +10,21 @@
         />
 
         <button class="btn btnPrimary" @click="getRepos">Search</button>
+
+        <div class="repos__wrapper" v-if="repos">
+          <div class="repo-item" v-for="repo in repos" :key="repo.id">
+            <div class="repos-info">
+              <a class="link" :href="repo.html_url" target="_blank">{{ repo.name }}</a>
+               <span>{{ repo.stargazers_count }}⭐</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import search from "@/components/Search.vue";
 import axios from "axios";
 import Search from "@/components/Search.vue";
 export default {
@@ -24,13 +32,16 @@ export default {
   data() {
     return {
       search: "",
+      repos: null,
     };
   },
   methods: {
     getRepos() {
       axios
         .get(`https://api.github.com/users/${this.search}/repos`)
-        .then((response) => console.log(response))
+        .then((response) => {
+          this.repos = response.data;
+        })
         .catch((error) => console.log(error));
     },
   },
@@ -58,4 +69,6 @@ button {
   padding: 10px 0;
   border-bottom: 1px solid #dbdbdb;
 }
+
+
 </style>
